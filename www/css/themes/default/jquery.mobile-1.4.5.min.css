@@ -1,0 +1,211 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('img/bg.jpg');
+            background-size: cover;
+            background-position: center; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.2); /* Make the header transparent */
+            padding: 5px;
+            text-align: center;
+            border-bottom: 0px solid #ddd;
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(106, 17, 203, 0.5), rgba(37, 117, 252, 0.5));
+            animation: shine 3s infinite linear;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            position: relative;
+            overflow: hidden;
+            height: 50px;
+        }
+
+        .header-content h2 {
+            position: relative;
+            top: 10px;
+            display: inline-block;
+            white-space: nowrap;
+            animation: popupText 1s ease-in-out infinite;
+        }
+
+        @keyframes popupText {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+            align-items: center;
+        }
+
+        .button-container {
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            gap: 1px;
+        }
+
+        .song-button {
+            width: 280px;
+            padding: 15px 30px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc, #6a11cb);
+            color: white;
+            font-size: 1.2em;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .song-button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #2575fc, #6a11cb, #2575fc);
+        }
+
+        .songs-list {
+            margin-top: 20px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(248, 248, 248, 0.6);
+            border-top: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: -10px 0;
+            animation: slideUp 1s ease-in-out;
+        }
+        
+        .footer-logos , .slider {
+          position: relative;
+          left: -20px;
+          bottom: -25px;
+        }
+
+        .footer-logos img {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            left: -25px;
+            bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+            /* Make the icons circular */
+        }
+
+        .footer-logos img:hover {
+            transform: scale(1.2);
+        }
+
+        .image-popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .popup-content {
+            margin: auto;
+            display: block;
+            width: 100%;
+            max-width: 700px;
+            height: 50%;
+            /* Make the image half the size */
+        }
+
+        .popup-description {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: grey;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes slideDown {
+            0% {
+                top: -100px;
+            }
+
+            100% {
+                top: 0;
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                bottom: -100px;
+            }
+
+            100% {
+                bottom: 0;
+            }
+        }

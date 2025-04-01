@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventist Playlist Songs</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .music-player {
+    text-align: center;
+}
+.back-button{
+            position: absolute;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 6px;
+            border-radius: 10px;
+            left: 20px;
+        }
+
+.control-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.control-button:hover {
+    background-color: #45a049;
+}
+
+.progress-container {
+    width: 100%;
+    height: 5px;
+    background-color: #ccc;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #4caf50;
+}
+
+         header {
+            background-color: rgba(255, 255, 255, 0.2); /* Make the header transparent */
+            padding: 2px;
+            text-align: center;
+            border-bottom: 0px solid #ddd;
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-logos img {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            left: 17px;
+            bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+            /* Make the icons circular */
+        }
+        .button-container {
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: -20px;
+            gap: 1px;
+        }
+
+        .slick-dots {
+            text-align: center;
+            bottom: -6px;
+            position: absolute;
+            width: 100%;
+            left: 18px;
+        }
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        .footer-logos .slick-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer-logos .slick-list {
+            width: 100%;
+        }
+        .footer-logos .slick-track {
+            display: flex;
+            align-items: center;
+        }
+        @media screen and (max-width: 1024px) {
+    .header-content h2 {
+        font-size: 1.8em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header-content h2 {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header-content h2 {
+        font-size: 1.2em;
+    }
+}
+#current-song-title {
+            color: white;
+        }
+    </style>
+</head>
+
+<body style="background-image: url('img/bg.jpg');">
+    <header>
+        <div class="header-content" data-role="header" data-position="fixed">
+            <button id="back-button" class="back-button" onclick="goBack()"><i class="fas fa-undo"></i></button>
+        </div>
+    </header>
+    <div class="container">
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        <div class="music-player">
+            <h2 id="current-song-title" class="slide-right"></h2>
+            <audio id="audio-player"></audio>
+            <button id="play-pause" class="control-button" onclick="togglePlayPause()">Play</button>
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <footer>
+            <div class="footer-logos slider">
+                <div class="slide"><img src="img/ay.jpg" alt="Logo 1" class="logo" onclick="showImage(this.src, 'Adventist Youth (AY) movement, which is a global initiative of the Seventh-day Adventist Church dedicated to inspiring young people in faith, service, and mission. The design is divided into two distinct halves, each rich in symbolism. The left side features a blue globe with a cross and the letters (AY), symbolizing the worldwide reach of the Adventist Youth movement. The cross represents Jesus Christ as the central figure in their faith, while the globe signifies the mission to spread the gospel to all nations. On the right side, the bright yellow background features three angels blowing trumpets. These angels symbolize the three angels messages found in Revelation 14:6-12, which emphasize the proclamation of the everlasting gospel, the call to true worship, and the warning against false teachings. The trumpets indicate a call to action, urging youth to be active in sharing their faith and preparing the world for the second coming of Christ. The upward movement of the angels suggests urgency and the divine nature of their mission. Together, the elements of the logo reflect the Adventist Youth movement’s commitment to evangelism, spiritual growth, and global service. The contrasting colors—blue and yellow—represent wisdom, faith, and enlightenment, reinforcing the movement’s goal to educate and empower young people in their Christian journey. This emblem serves as a reminder of the Adventist call to mission, discipleship, and readiness for Christ’s return.')"></div>
+                <div class="slide"><img src="img/adventure.jpg" alt="Logo 2" class="logo" onclick="showImage(this.src, 'The Adventurer Club represents the core values and mission of the Seventh-day Adventist Church’s program for young children and their families. The triangular shape of the emblem conveys strength and stability, symbolizing the foundational role that faith, education, and community play in a child’s spiritual growth. The blue border, with the words (Adventurer Club,) reflects wisdom and trust, reinforcing the idea that children are nurtured in a safe and supportive Christian environment. At the center of the logo, a scenic landscape with rolling green hills, trees, and a winding path leads to a white cross. This imagery symbolizes the Christian journey, where children and their families walk the path of faith towards Jesus Christ, who is represented by the cross. The cross stands as a beacon of hope, salvation, and guidance, reminding Adventurers to keep Christ at the center of their lives. The presence of nature highlights the importance of outdoor activities and learning about God through His creation, which is a key aspect of the Adventurer Club program. The silhouettes of a family—parents and a child holding hands—emphasize the club’s mission of fostering strong family bonds and spiritual development. The Adventurer Club is designed to support parents in their role as the primary spiritual leaders of their children, encouraging them to grow together in faith, character, and service. Overall, the logo encapsulates the Adventurer Club’s commitment to guiding children on their Christian journey, helping them develop a love for Jesus, family, and the world around them.')"></div>
+                <div class="slide"><img src="img/seventhday.jpg" alt="Logo 3" class="logo" onclick="showImage(this.src, 'Seventh-Day Adventist Church is rich in symbolism, representing the core beliefs and mission of the denomination. The open Bible at the base of the logo signifies the foundation of their faith—God’s Word. The cross embedded within the Bible highlights the central role of Jesus Christ and His sacrifice for humanity. This reflects the Adventist belief in salvation through Christ and the importance of scripture as the ultimate guide for Christian living. Above the Bible, there are three flames, which represent the three angels’ messages from Revelation 14:6-12. These messages emphasize the Adventist mission to proclaim the gospel, warn the world about God’s judgment, and call people to worship the true God. The upward movement of the flames symbolizes spiritual growth, the Holy Spirit’s guidance, and the hope of Christ’s second coming. The stylized design also conveys a sense of motion, reflecting the church’s dynamic engagement in spreading its message globally. The overall design of the logo emphasizes balance and harmony, with its elements working together to convey a unified message of faith, salvation, and mission. The use of green in the Bible symbolizes life and renewal, while the golden flames represent divine presence and enlightenment. This logo serves as a visual representation of the Adventist commitment to scripture, evangelism, and the anticipation of Christ’s return, embodying their dedication to a Christ-centered life and global outreach.')"></div>
+                <div class="slide"><img src="img/pathfinder.jpg" alt="Logo 4" class="logo" onclick="showImage(this.src, 'The Pathfinder Club logo is a symbol of strength, commitment, and spiritual growth for young people in the Seventh-day Adventist Church. The triangular shape represents stability and direction, guiding youth on their journey of faith and service. The red and yellow colors signify courage, passion, and dedication, highlighting the commitment of Pathfinders to stand firm in their beliefs and serve their communities. The word (Pathfinder) at the top emphasizes the clubs purpose—to help young people find their path in life while staying grounded in Christian principles. At the center of the logo, a shield represents protection and preparedness, signifying that Pathfinders are equipped with faith, knowledge, and skills to face life’s challenges. Overlapping the shield is a blue sword, which symbolizes the Word of God (Ephesians 6:17). This represents the importance of scripture as the spiritual weapon against evil and a guide for making righteous decisions. The sword also stands for bravery, integrity, and the readiness of Pathfinders to defend truth and live according to God’s teachings. Overall, the Pathfinder Club logo embodies the core mission of the organization—to develop strong, faithful, and service-oriented young people. The combination of the shield and sword illustrates the balance between protection and action, reminding Pathfinders to remain steadfast in their faith while actively spreading God’s love. The logo serves as a powerful emblem of leadership, adventure, and the lifelong commitment to Christian values.')"></div>
+                <div class="slide"><img src="img/gyd.jpg" alt="Logo 5" class="logo" onclick="showImage(this.src, 'The Global Youth Day (GYD) logo symbolizes the worldwide movement of young people actively engaging in service and mission. The central element of the logo is a globe, representing the global reach of the initiative, where youth from different nations and cultures unite in a shared purpose. At the center of the globe, a red cross signifies Jesus Christ as the foundation of this mission, emphasizing the importance of faith-driven service and spreading God’s love through action. The red curved lines on the left side resemble broadcast signals, symbolizing the outreach and impact of young people as they share their faith, hope, and compassion with the world. These lines suggest a call to action, encouraging youth to be the (sermon) by living out their faith through acts of kindness, service projects, and evangelism. The splattered design around the elements represents the dynamic, energetic, and hands-on approach of the movement, showing that youth are not just passive believers but active agents of change. The (GLOBAL YOUTH DAY) reinforces the idea that this event is not just a local effort but an international mission, inspiring youth across continents to participate in a unified day of service. The combination of blue and red colors represents trust, strength, and passion, reflecting the commitment of young people to make a meaningful difference in their communities. This logo serves as a powerful reminder that faith is best demonstrated through action, encouraging youth to embody the message of Christ by serving others with love and dedication.')"></div>
+                <div class="slide"><img src="img/masamicus.jpg" alt="Logo 6" class="logo" onclick="showImage(this.src, 'The MAS AMICUS logo carries a profound symbolic meaning, emphasizing the themes of faith, unity, and service. At the center of the design, two stylized faces merge into one, depicting Jesus Christ and a human figure. This represents the close relationship between Christ and His followers, reinforcing the idea that believers are called to reflect His character in their daily lives. The crown of thorns on Christ’s head signifies His sacrifice, while the human figure symbolizes every disciple’s calling to walk in His footsteps. Encircling the faces is a globe, illustrating the worldwide mission of MAS AMICUS, which likely focuses on global outreach, evangelism, and community service. The presence of a cross within the design underscores the centrality of Christ’s message in the organization’s mission. The straight lines and geometric composition convey strength, stability, and purpose, suggesting a well-structured movement dedicated to spreading Christian values and compassion. The words (MAS AMICUS,) which translate to (More Friend) in Latin, further highlight the logo’s message of friendship, both with Christ and among believers. This suggests a commitment to fostering brotherhood, support, and shared faith within a global Christian community. The overall design serves as a visual representation of a mission-driven organization that seeks to embody Christ’s love through acts of kindness, service, and a strong spiritual foundation.')"></div>
+                <div class="slide"><img src="img/1000missionary.jpg" alt="Logo 7" class="logo" onclick="showImage(this.src, 'The 1000 Missionary Movement logo is rich in symbolism, reflecting a global commitment to spreading the Christian message through missionary work. At its center, the globe represents the worldwide scope of the movement, emphasizing the mission to reach all nations with the gospel. The golden banner with (1000 Missionary Movement) signifies a structured and organized initiative, highlighting the dedication of a thousand missionaries at a time who are actively engaged in evangelism, service, and outreach across the world. Above the globe, a flame with a dove embedded within it symbolizes the Holy Spirit’s presence and guidance in the missionary work. The fire represents zeal, passion, and the transformative power of the gospel, while the dove is a biblical symbol of peace, purity, and divine inspiration. This combination underscores the belief that missionaries are empowered by the Holy Spirit to bring light and hope to different parts of the world. On the left side of the logo, flying arrows or doves pointing outward from the globe illustrate the movement of missionaries being sent to different regions. This conveys the dynamic nature of the mission, where individuals are mobilized and sent forth to serve. The entire design encapsulates the vision of the 1000 Missionary Movement—a dedication to spreading faith, serving communities, and being led by the Holy Spirit to make a global impact.')"></div>
+            </div>
+        </footer>
+    </div>
+    <div id="image-popup" class="image-popup">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <img class="popup-content" id="popup-image">
+        <div class="popup-description" id="popup-description">Description text goes here...</div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                arrows: false,
+                dots: true
+            });
+
+            document.addEventListener("backbutton", function(e){
+                if($.mobile.activePage.is('#homepage')){
+                    e.preventDefault();
+                    navigator.app.exitApp();
+                }
+                else {
+                    navigator.app.backHistory()
+                }
+            }, false);
+        });
+
+        $(document).ready(function () {
+        function adjustHeaderSize() {
+            let screenWidth = $(window).width();
+            let newSize;
+
+            if (screenWidth > 1024) {
+                newSize = "2em";
+            } else if (screenWidth > 768) {
+                newSize = "1.8em";
+            } else if (screenWidth > 480) {
+                newSize = "1.5em";
+            } else {
+                newSize = "1.2em";
+            }
+
+            $(".header-content h2").animate({ fontSize: newSize }, 300);
+        }
+
+        function adjustBackButton() {
+                let screenWidth = $(window).width();
+
+                if (screenWidth > 1024) {
+                    $("#back-button").css({ left: "20px" });
+                } else if (screenWidth > 768) {
+                    $("#back-button").css({ left: "15px" });
+                } else if (screenWidth > 480) {
+                    $("#back-button").css({ left: "10px" });
+                } else {
+                    $("#back-button").css({ left: "5px" });
+                }
+            }
+
+            // Call function on page load
+            adjustHeaderSize();
+            adjustBackButton();
+
+            // Adjust on window resize
+            $(window).resize(function () {
+                adjustHeaderSize();
+                adjustBackButton();
+            });
+        });
+
+    const audioPlayer = document.getElementById('audio-player');
+    const playPauseButton = document.getElementById('play-pause');
+    const progressBar = document.getElementById('progress-bar');
+    const songTitle = document.getElementById('current-song-title');
+
+    const playlist = [
+        { song: 'AYsongMp3/I WILL GO __ Adventist Youth Theme Song 2021 [3iNwmPnvE98].mp3', title: 'I WILL GO __ Adventist Youth Theme Song 2021' },
+        // Add more songs to the playlist here
+    ];
+    let currentSongIndex = 0;
+
+    function playSong(index) {
+        const { song, title } = playlist[index];
+        audioPlayer.src = song;
+        audioPlayer.play();
+        playPauseButton.textContent = 'Pause';
+        songTitle.textContent = title;
+        songTitle.classList.remove('slide-right');
+        void songTitle.offsetWidth; // Trigger reflow to restart animation
+        songTitle.classList.add('slide-right');
+    }
+
+    function togglePlayPause() {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            playPauseButton.textContent = 'Pause';
+        } else {
+            audioPlayer.pause();
+            playPauseButton.textContent = 'Play';
+        }
+    }
+
+    audioPlayer.addEventListener('timeupdate', () => {
+        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.style.width = progress + '%';
+    });
+
+    audioPlayer.addEventListener('play', () => {
+        songTitle.classList.add('slide-right');
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+        songTitle.classList.remove('slide-right');
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+        currentSongIndex = (currentSongIndex + 1) % playlist.length;
+        playSong(currentSongIndex);
+    });
+    function goBack() {
+            window.location.href = 'index.html';
+        }
+
+    playSong(currentSongIndex);
+    </script> 
+    
+</body>
+</html>
